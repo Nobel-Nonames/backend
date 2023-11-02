@@ -1,19 +1,40 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import Mongo from "../utils/mongoose";
+const SchemaDefinition = {
+  usertype: {
+    type: String,
+    required: true,
+    enum: ['admin', 'master', 'user'],
+    default: 'user'
+  },
+  created: {
+    type: Date,
+    required: true,
+    default: new Date()
+  },
+  username: {
+    type: String,
+    unique: true,
+    required: true,
+  },
+  password: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String,
+    required: true
+  },
+  tel: {
+    type: String,
+    required: true,
+    uniqure: true
+  },
+  salt: {
+    type: String,
+    required: true
+  }
+};
 
-@Entity({ name: 'authEntity' })
-export default class AuthEntity extends BaseEntity {
-  @PrimaryGeneratedColumn('uuid')
-  uuid!: string;
+const authModel = new Mongo().releaseModel('auth', SchemaDefinition)
 
-  @Column({ name: 'username', type: 'varchar', length: 24, unique: true })
-  username!: string;
-
-  @Column({ name: 'nickname', type: 'varchar', length: 8 })
-  nickname!: string;
-
-  @Column({ name: 'password', type: 'text' })
-  password!: string;
-
-  @Column({ name: 'salt', type: 'varchar', length: 32 })
-  salt!: string;
-}
+export default authModel;
