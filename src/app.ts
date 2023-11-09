@@ -3,13 +3,14 @@ import * as skio from 'socket.io'
 import { AppController } from './app/app.controller';
 import SocketTerminal from './socket/socket.terminal';
 import { AuthController } from './auth/auth.controller';
+import { ModelController } from './model/model.controller';
 
 const SocketCors = {
   origin: '*',
   methods: ['GET', 'POST']
 }
 
-const controllers = [new AppController('/'), new AuthController('/auth')]
+const controllers = [new AppController('/'), new AuthController('/auth'), new ModelController('/model')]
 
 export default class App {
   public router: express.Application;
